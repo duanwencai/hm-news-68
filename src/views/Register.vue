@@ -1,6 +1,7 @@
 <template>
   <div>
-    <hm-header><slot>注册</slot></hm-header>
+    <hm-header>注册</hm-header>
+    <hm-logo></hm-logo>
   </div>
 </template>
 
