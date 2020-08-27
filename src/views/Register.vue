@@ -1,10 +1,11 @@
 <template>
-  <div>注册组件</div>
+  <div>
+    <hm-header><slot>注册</slot></hm-header>
+  </div>
 </template>
 
 <script>
 export default {}
 </script>
 
-<style>
-</style>
+<style></style>

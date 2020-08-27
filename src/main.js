@@ -3,14 +3,18 @@ import App from './App.vue'
 import router from './router'
 import './styles/base.less'
 import './styles/iconfont.css'
-// 第三种方式
+// 第三种方式;
 import Vant from 'vant'
 import 'vant/lib/index.css'
-Vue.use(Vant)
 // 第一种方式
 // import { Button } from 'vant'
 // Vue.use(Button)
-
+// 屏幕适配
+import 'amfe-flexible'
+import HmHeader from './components/HmHeader.vue'
+Vue.component('hm-header', HmHeader)
+Vue.use(Vant)
+// 关闭控制台警告信息
 Vue.config.productionTip = false
 
 new Vue({
