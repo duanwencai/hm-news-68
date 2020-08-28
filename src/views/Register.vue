@@ -6,7 +6,7 @@
       <van-field
         v-model="user.username"
         label="用户名"
-        placeholder="用户名 / 手机号码"
+        placeholder="用户名"
         :rules="rules.username"
       />
       <van-field
@@ -34,50 +34,43 @@
 <script>
 // import axios from 'axios'
 export default {
-  data() {
-    return {
-      user: {
-        username: '',
-        password: '',
-        nickname: ''
-      },
-      rules: {
-        username: [
-          { required: true, message: '请填写用户名', trigger: 'onChange' },
-          {
-            pattern: /^\d{5,11}/,
-            message: '用户长度是5-11位数字',
-            trigger: 'onChange'
-          }
-        ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'onChange' },
-          {
-            pattern: /^\d{3,9}/,
-            message: '密码长度是3-9位数字',
-            trigger: 'onChange'
-          }
-        ],
-        nickname: [
-          { required: true, message: '昵称不能为空', trigger: 'onChange' },
-          {
-            pattern: /^[\u4e00-\u9fa5]{2,6}/,
-            message: '昵称必须为中文3-6位',
-            trigger: 'onChange'
-          }
-        ]
-      }
-    }
-  },
   methods: {
     async register() {
       const res = await this.$axios.post('/register', this.user)
       const { statusCode, message } = res.data
       if (statusCode === 200) {
-        this.$toast(message)
-        this.$router.push('/login')
+        this.toast.success(message)
+        this.router.push('/login')
       } else {
-        this.$fail(message)
+        this.toast.fail(message)
+      }
+    }
+  },
+  data() {
+    return {
+      user: {
+        username: '',
+        passwprd: '',
+        nickname: ''
+      },
+      rules: {
+        username: [{ required: true, message: '请填写用户名', trigger: 'onChange' },
+          {
+            pattern: /^\d{3,6}$/,
+            message: '请填写用户名3至6位',
+            trigger: 'onChange'
+          }],
+        password: [{ required: true, message: '请填写密码', trigger: 'onChange' },
+          {
+            pattern: /^\d{3,6}$/,
+            message: '请填写密码名3至6位',
+            trigger: 'onChange'
+          }],
+        nickname: [{ required: true, message: '请填写昵称', trigger: 'onChange' }, {
+          pattern: /^[\u4e00-\u9fa5]{3,6}$/,
+          message: '请填写昵称名3至6位',
+          trigger: 'onChange'
+        }]
       }
     }
   }

@@ -4,13 +4,13 @@
     <hm-logo></hm-logo>
     <van-form @submit="login">
       <van-field
-        v-model="username"
+        v-model="user.username"
         label="用户名"
-        placeholder="用户名 / 手机号码"
+        placeholder="用户名"
         :rules="rules.username"
       />
       <van-field
-        v-model="password"
+        v-model="user.password"
         type="password"
         label="密码"
         placeholder="密码"
@@ -22,7 +22,7 @@
         </van-button>
       </div>
     </van-form>
-    <p class="tips">没有账号去<router-link to="/register">注册</router-link></p>
+    <p class="leave">没有账号去<router-link to='/register'>注册</router-link></p>
   </div>
 </template>
 
@@ -31,40 +31,35 @@
 export default {
   data() {
     return {
-      username: '',
-      password: '',
+      user: {
+        username: '',
+        passwprd: ''
+      },
       rules: {
-        username: [
-          { required: true, message: '请填写用户名', trigger: 'onChange' },
+        username: [{ required: true, message: '请填写用户名', trigger: 'onChange' },
           {
-            pattern: /^\d{5,11}/,
-            message: '用户长度是5-11位数字',
+            pattern: /^\d{3,6}$/,
+            message: '请填写用户名3至6位',
             trigger: 'onChange'
-          }
-        ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'onChange' },
+          }],
+        password: [{ required: true, message: '请填写密码', trigger: 'onChange' },
           {
-            pattern: /^\d{3,9}/,
-            message: '密码长度是3-9位数字',
+            pattern: /^\d{3,6}$/,
+            message: '请填写密码名3至6位',
             trigger: 'onChange'
-          }
-        ]
+          }]
       }
     }
   },
   methods: {
     async login() {
-      const res = await this.$axios.post('/login', {
-        username: this.username,
-        password: this.password
-      })
+      const res = await this.$axios.post('/login', this.user)
       const { statusCode, message } = res.data
       if (statusCode === 200) {
-        this.$toast.success(message)
         this.$router.push('/user')
+        this.$toast.success(message)
       } else {
-        this.$toast.fail('登录失败')
+        this.$toast.fail(message)
       }
     }
   }
@@ -72,12 +67,12 @@ export default {
 </script>
 
 <style lang="less">
-.tips {
-  padding: 15px;
-  font-size: 16px;
+.leave{
   text-align: right;
-  a {
-    color: red;
+  font-size: 16px;
+  padding: 15px;
+  a{
+    color:red
   }
 }
 </style>
