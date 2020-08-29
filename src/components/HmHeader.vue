@@ -19,7 +19,7 @@ export default {
 }
 </script>
 
-<style lang='less'>
+<style lang='less' scoped>
 .hm-header {
   height: 50px;
   border-bottom: 1px solid #ccc;

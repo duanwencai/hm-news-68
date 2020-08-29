@@ -4,13 +4,13 @@
     <hm-logo></hm-logo>
     <van-form @submit="login">
       <van-field
-        v-model="user.username"
+        v-model="username"
         label="用户名"
         placeholder="用户名"
         :rules="rules.username"
       />
       <van-field
-        v-model="user.password"
+        v-model="password"
         type="password"
         label="密码"
         placeholder="密码"
@@ -22,42 +22,64 @@
         </van-button>
       </div>
     </van-form>
-    <p class="leave">没有账号去<router-link to='/register'>注册</router-link></p>
+    <p class="leave">
+      没有账号去<router-link to="/register">注册</router-link>
+    </p>
   </div>
 </template>
 
 <script>
 // import axios from 'axios'
 export default {
+  created() {
+    if (this.$route.params.username === undefined) {
+      return
+    }
+
+    const { username, password } = this.$route.params
+    this.username = username
+    this.password = password
+    // const { username, password } = this.$route.params
+    // this.user.username = username
+    // this.user.password = password
+    // console.log(username, password)
+  },
   data() {
     return {
-      user: {
-        username: '',
-        passwprd: ''
-      },
+      username: '',
+      password: '',
       rules: {
-        username: [{ required: true, message: '请填写用户名', trigger: 'onChange' },
+        username: [
+          { required: true, message: '请填写用户名', trigger: 'onChange' },
           {
             pattern: /^\d{3,6}$/,
             message: '请填写用户名3至6位',
             trigger: 'onChange'
-          }],
-        password: [{ required: true, message: '请填写密码', trigger: 'onChange' },
+          }
+        ],
+        password: [
+          { required: true, message: '请填写密码', trigger: 'onChange' },
           {
             pattern: /^\d{3,6}$/,
             message: '请填写密码名3至6位',
             trigger: 'onChange'
-          }]
+          }
+        ]
       }
     }
   },
   methods: {
     async login() {
-      const res = await this.$axios.post('/login', this.user)
-      const { statusCode, message } = res.data
+      const res = await this.$axios.post('/login', {
+        username: this.username,
+        password: this.password
+      })
+      const { statusCode, message, data } = res.data
       if (statusCode === 200) {
-        this.$router.push('/user')
         this.$toast.success(message)
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('userid', data.user.id)
+        this.$router.push('/user')
       } else {
         this.$toast.fail(message)
       }
@@ -66,13 +88,13 @@ export default {
 }
 </script>
 
-<style lang="less">
-.leave{
+<style lang="less" scoped>
+.leave {
   text-align: right;
   font-size: 16px;
   padding: 15px;
-  a{
-    color:red
+  a {
+    color: red;
   }
 }
 </style>
