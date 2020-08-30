@@ -33,9 +33,12 @@
       <template>我的收藏</template>
       <template #content>文章/视频</template>
     </hm-navtem>
-    <hm-navtem>
+    <hm-navtem to="/edit">
       <template>设置</template>
     </hm-navtem>
+    <div style="margin:15px">
+      <van-button type="danger" block @click="logout">退出登录</van-button>
+    </div>
   </div>
 </template>
 
@@ -57,6 +60,22 @@ export default {
       this.$router.push('/login')
       localStorage.removeItem('token')
       localStorage.removeItem('userid')
+    }
+  },
+  methods: {
+    async logout() {
+      try {
+        await this.$dialog.confirm({
+          title: '温馨提示',
+          message: '亲，是否要退出'
+        })
+      } catch {
+        return this.$toast('取消退出')
+      }
+      localStorage.removeItem('token')
+      localStorage.removeItem('userid')
+      this.$toast.success('退出成功')
+      this.$router.push('/login')
     }
   },
   data() {
@@ -110,6 +129,7 @@ export default {
       margin-right: 5px;
       color: #d7d7d7;
     }
+
   }
 }
 </style>
