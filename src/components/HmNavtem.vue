@@ -13,9 +13,7 @@ export default {
       if (this.to) {
         this.$router.push(this.to)
       }
-      if (this.too) {
-        this.$router.push(this.to)
-      }
+      this.$emit('click')
     }
   },
   props: {
