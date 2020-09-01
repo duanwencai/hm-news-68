@@ -21,11 +21,11 @@
         <span class="iconfont iconjiantou1"></span>
       </div>
     </div>
-    <hm-navtem to="/follow">
+    <hm-navtem to="/myfollow">
       <template>我的关注</template>
       <template #content>关注的用户</template>
     </hm-navtem>
-    <hm-navtem>
+    <hm-navtem to='/mycomment'>
       <template>我的跟帖</template>
       <template #content>跟帖/回复</template>
     </hm-navtem>
@@ -129,7 +129,6 @@ export default {
       margin-right: 5px;
       color: #d7d7d7;
     }
-
   }
 }
 </style>

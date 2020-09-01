@@ -5,7 +5,9 @@ import router from '../router'
 import { Toast } from 'vant'
 // axios挂载到vue的原型
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://127.0.0.1:3000'
+const URL = 'http://127.0.0.1:3000'
+axios.defaults.baseURL = URL
+Vue.prototype.$base = URL
 axios.interceptors.request.use(function(config) {
   const token = localStorage.getItem('token')
   if (token) {
