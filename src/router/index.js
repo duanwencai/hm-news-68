@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/Login'
-import Register from '../views/Register'
-import User from '../views/User.vue'
-import Edit from '../views/Edit.vue'
-import MyFollow from '../views/MyFollow.vue'
-import Mycomment from '../views/Mycomment.vue'
+import Login from '../views/user/Login'
+import Register from '../views/user/Register'
+import User from '../views/user/User.vue'
+import Edit from '../views/user/Edit.vue'
+import MyFollow from '../views/user/MyFollow.vue'
+import Mycomment from '../views/user/Mycomment.vue'
+import Mystar from '../views/user/Mystar.vue'
+import Index from '../views/news/index.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,14 +16,16 @@ const routes = [
   { path: '/user', component: User, name: 'user' },
   { path: '/edit', component: Edit, nane: 'edit' },
   { path: '/myfollow', component: MyFollow, nane: 'myfollow' },
-  { path: '/mycomment', component: Mycomment, nane: 'mycomment' }
+  { path: '/mycomment', component: Mycomment, nane: 'mycomment' },
+  { path: '/mystar', component: Mystar, nane: 'mystar' },
+  { path: '/', component: Index, nane: 'index' }
 ]
 const router = new VueRouter({
   routes
 })
 router.beforeEach(function(to, from, next) {
   const token = localStorage.getItem('token')
-  const authUrls = ['/user', '/edit', '/myfollow', '/mycomment']
+  const authUrls = ['/user', '/edit', '/myfollow', '/mycomment', '/mystar']
   if (!authUrls.includes(to.path) || token) {
     next()
   } else {

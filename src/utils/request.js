@@ -8,6 +8,13 @@ Vue.prototype.$axios = axios
 const URL = 'http://127.0.0.1:3000'
 axios.defaults.baseURL = URL
 Vue.prototype.$base = URL
+Vue.prototype.$url = function(url) {
+  if (url.startsWith('http')) {
+    return url
+  } else {
+    return URL + url
+  }
+}
 axios.interceptors.request.use(function(config) {
   const token = localStorage.getItem('token')
   if (token) {
