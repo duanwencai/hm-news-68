@@ -80,5 +80,12 @@ export default {
       height: 74px;
     }
   }
+  .user{
+        color:#666;
+        font-size: 14px;
+        span {
+          margin-right: 15px;
+        }
+      }
 }
 </style>

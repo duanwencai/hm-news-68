@@ -39,6 +39,7 @@ export default {
   text-align: center;
   z-index: 999;
   background-color: #FFFFFF;
+  align-items: center;
   .back,
   .extra{
       width: 50px;
