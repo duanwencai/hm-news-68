@@ -1,6 +1,17 @@
 <template>
-  <div hm-post>
-    <div class="single-img-post" v-if='post.cover.length < 3'>
+  <div hm-post @click="$router.push(`/postdetail/${post.id}`)">
+    <div class="video-post" v-if="post.type===2">
+      <div class="title">{{post.title}}</div>
+      <div class="video">
+        <span class="iconfont iconshipin"></span>
+        <img :src="$url(post.cover[0].url)" alt="">
+      </div>
+      <div class="user">
+            <span>{{post.user.nickname}}</span>
+            <span>{{post.comment_length}}跟帖</span>
+          </div>
+    </div>
+    <div class="single-img-post" v-else-if='post.cover.length < 3'>
       <div class="item">
         <div class="info">
           <div class="title">{{post.title}}</div>
@@ -81,6 +92,42 @@ export default {
     }
   }
   .user{
+        color:#666;
+        font-size: 14px;
+        span {
+          margin-right: 15px;
+        }
+      }
+}
+.video-post {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  .title {
+    font-size: 16px;
+  }
+  .video {
+    position: relative;
+    padding: 10px 0;
+    img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+    }
+    span {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-color: rgba(255, 255, 255, .5);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      border-radius: 50%;
+      text-align: center;
+      line-height: 50px;
+      font-size: 24px;
+    }
+  }
+   .user{
         color:#666;
         font-size: 14px;
         span {
