@@ -84,6 +84,9 @@ export default {
       const { statusCode, data } = res.data
       // console.log(data)
       if (statusCode === 200) {
+        if (this.pageIndex === 1) {
+          this.newslist = []
+        }
         this.newslist = [...this.newslist, ...data]
         this.loading = false
         this.refreshing = false
