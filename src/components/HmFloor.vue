@@ -1,14 +1,14 @@
 <template>
   <div>
-    <hm-floor :comment='comment.parent' v-if="comment.parent"></hm-floor>
+    <hm-floor @reply='replyfn' :conut="conut - 1" :comment='comment.parent' v-if="comment.parent"></hm-floor>
       <div class="hm-floor" :class="{bt: !comment.parent}">
         <div class="title">
-          <div class="left">{{comment.user.nickname}}</div>
+          <div class="left">{{conut}}.  {{comment.user.nickname}}</div>
           <div class="center">{{comment.create_date | now}}</div>
-          <div class="right">回复</div>
+          <div class="right" @click="reply">回复</div>
         </div>
-      <div class="content">{{comment.content}}</div>
-  </div>
+        <div class="content">{{comment.content}}</div>
+      </div>
   </div>
 </template>
 
@@ -16,8 +16,18 @@
 export default {
   name: 'hm-floor',
   props: {
-    comment: Object
+    comment: Object,
+    conut: Number
+  },
+  methods: {
+    reply() {
+      this.$emit('reply', this.comment.id, this.comment.user.nickname)
+    },
+    replyfn(id, nickname) {
+      this.$emit('reply', id, nickname)
+    }
   }
+
 }
 </script>
 

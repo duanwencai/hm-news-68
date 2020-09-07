@@ -31,18 +31,27 @@
         </div>
       </div>
     </div>
-    <div class="footer">
+     <div class="footer-textarea"  v-if="isShowTextarea" >
+      <textarea :placeholder="'回复:'+nickname" ref="textarea" v-model="content"></textarea>
+      <van-button type="primary" @click='publish'>发送</van-button>
+    </div>
+    <div class="footer-input" v-else>
       <div class="search">
-        <input type="text" placeholder="回复">
+        <input type="text"  placeholder="回复" @focus="onFocus">
       </div>
       <span class="iconfont iconpinglun-"><i>20</i></span>
-      <span class="iconfont iconshoucang" :class="{now:post.has_star}" @click="stra"></span>
+      <span class="iconfont iconshoucang" :class="{now: post.has_star}" @click="stra"></span>
       <span class="iconfont iconfenxiang"></span>
     </div>
     <!-- 评论 -->
     <div class="comment-list">
       <h3>精彩跟帖</h3>
-      <hm-comment :comment="comment" v-for="comment in commentlist" :key='comment.id'></hm-comment>
+      <hm-comment
+      :comment="comment"
+      v-for="comment in commentlist"
+      :key='comment.id'
+      @reply='onreply'>
+      </hm-comment>
     </div>
   </div>
 </template>
@@ -52,7 +61,11 @@ export default {
   data() {
     return {
       post: {},
-      commentlist: {}
+      commentlist: {},
+      isShowTextarea: false,
+      content: '',
+      nickname: '',
+      replyid: ''
     }
   },
   created() {
@@ -66,14 +79,12 @@ export default {
       const { statusCode, data } = res.data
       if (statusCode === 200) {
         this.commentlist = data
-        console.log(this.commentlist)
       }
     },
     async getinfo() {
       const res = await this.$axios.get(`/post/${this.$route.params.id}`)
       const { statusCode, data } = res.data
       if (statusCode === 200) {
-        console.log(data)
         this.post = data
       }
     },
@@ -140,6 +151,33 @@ export default {
         this.$toast.success(message)
         this.getinfo()
       }
+    },
+    async onFocus() {
+      this.isShowTextarea = true
+      await this.$nextTick()
+      this.$refs.textarea.focus()
+    },
+    async publish() {
+      const res = await this.$axios.post(`/post_comment/${this.post.id}`, {
+        content: this.content,
+        parent_id: this.replyid
+      })
+      const { statusCode, message } = res.data
+      if (statusCode === 200) {
+        this.$toast.success(message)
+        this.getcommentlist()
+        this.content = ''
+        this.nickname = ''
+        this.replyid = ''
+        this.isShowTextarea = false
+      }
+    },
+    async onreply(id, nickname) {
+      this.isShowTextarea = true
+      await this.$nextTick()
+      this.$refs.textarea.focus()
+      this.nickname = '@' + nickname
+      this.replyid = id
     }
   }
 }
@@ -234,12 +272,14 @@ export default {
   }
 }
 .comment-list {
+  margin-bottom: 50px;
   h3 {
     text-align: center;
     padding: 10px 0;
   }
 }
-.footer {
+.footer-input{
+  background-color: #fff;
   width: 100%;
   height: 50px;
   display: flex;
@@ -249,7 +289,6 @@ export default {
   align-items: center;
   justify-content: space-around;
   padding: 0 10px;
-  background-color: #fff;
   .iconfont {
     font-size: 24px;
   }
@@ -283,6 +322,28 @@ export default {
       font-size: 14px;
       padding-left: 20px;
     }
+  }
+}
+.footer-textarea {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  position: fixed;
+  z-index: 999;
+  bottom: 0;
+  padding: 10px;
+  align-items: flex-end;
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+  justify-content: space-around;
+  textarea {
+    width: 260px;
+    height: 80px;
+    background-color: #ccc;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
   }
 }
 </style>
