@@ -1,7 +1,8 @@
 <template>
   <div>
     <hm-header>我的收藏</hm-header>
-    <div class="list">
+    <hm-post :post='item' v-for="item in list" :key="item.id"></hm-post>
+    <!-- <div class="list">
       <div class="item" v-for='item in list' :key='item.id'>
         <div class="info">
           <div class="title">{{item.title}}</div>
@@ -14,7 +15,7 @@
           <img :src="$url(item.cover[0].url)" alt="">
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
