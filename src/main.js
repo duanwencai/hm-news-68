@@ -4,7 +4,6 @@ import router from './router'
 import './styles/base.less'
 import './styles/iconfont.css'
 // 第三种方式;
-import Vant from 'vant'
 import 'vant/lib/index.css'
 // 第一种方式
 // import { Button } from 'vant'
@@ -14,7 +13,7 @@ import 'amfe-flexible'
 import './utils/global'
 import './utils/request'
 import './utils/filters'
-Vue.use(Vant)
+import './utils/vant'
 // 关闭控制台警告信息
 Vue.config.productionTip = false
 

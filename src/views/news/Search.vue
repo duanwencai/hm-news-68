@@ -10,6 +10,7 @@
           placeholder="请输入搜索关键字"
           v-model="key"
           @input="recommend"
+          @keyup.enter="search"
         />
         <span class="iconfont iconsearch"></span>
       </div>
@@ -114,7 +115,6 @@ export default {
           keyword: this.key
         }
       })
-      console.log(res.data)
       const { statusCode, data } = res.data
       if (statusCode === 200) {
         this.recommendlist = data

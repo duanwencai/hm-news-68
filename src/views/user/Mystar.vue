@@ -33,7 +33,6 @@ export default {
     async getStarList() {
       const res = await this.$axios.get('/user_star')
       const { statusCode, data } = res.data
-      console.log(data)
       if (statusCode === 200) {
         this.list = data
       }

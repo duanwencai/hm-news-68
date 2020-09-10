@@ -2,7 +2,7 @@
   <div class="user-edit">
     <hm-header>编辑资料</hm-header>
     <div class="avatar">
-      <img :src="base + user.head_img" alt="" />
+      <img :src="$base + user.head_img" alt="" />
       <van-uploader :after-read="afterRead" />
     </div>
     <hm-navtem @click="shownickname">
@@ -102,11 +102,7 @@ export default {
       img: ''
     }
   },
-  computed: {
-    base() {
-      return this.$axios.defaults.baseURL
-    }
-  },
+
   created() {
     this.getUserinif()
   },

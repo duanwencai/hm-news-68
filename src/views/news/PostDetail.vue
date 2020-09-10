@@ -32,7 +32,7 @@
       </div>
     </div>
      <div class="footer-textarea"  v-if="isShowTextarea" >
-      <textarea :placeholder="'回复:'+nickname" ref="textarea" v-model="content"></textarea>
+      <textarea :placeholder="'回复:'+nickname" ref="textarea" v-model="content" @blur="sq"></textarea>
       <van-button type="primary" @click='publish'>发送</van-button>
     </div>
     <div class="footer-input" v-else>
@@ -178,6 +178,11 @@ export default {
       this.$refs.textarea.focus()
       this.nickname = '@' + nickname
       this.replyid = id
+    },
+    sq() {
+      if (this.content === '') {
+        this.isShowTextarea = false
+      }
     }
   }
 }

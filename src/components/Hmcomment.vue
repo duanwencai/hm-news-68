@@ -2,7 +2,7 @@
   <div class="hm-comment">
     <div class="title">
       <div class="left">
-        <img :src="$base+comment.user.head_img" alt="">
+        <img :src="$base + comment.user.head_img" alt="">
       </div>
       <div class="center">
         <p>{{comment.user.nickname}}</p>
@@ -34,7 +34,6 @@ export default {
       }
     },
     reply() {
-      console.log(this.comment.id, this.comment.user.nickname)
       this.$emit('reply', this.comment.id, this.comment.user.nickname)
     },
     onreply(id, nickname) {

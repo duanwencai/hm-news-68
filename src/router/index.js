@@ -1,16 +1,26 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/user/Login'
-import Register from '../views/user/Register'
-import User from '../views/user/User.vue'
-import Edit from '../views/user/Edit.vue'
-import MyFollow from '../views/user/MyFollow.vue'
-import Mycomment from '../views/user/Mycomment.vue'
-import Mystar from '../views/user/Mystar.vue'
-import Index from '../views/news/index.vue'
-import Manage from '../views/news/Manage.vue'
-import PostDetail from '../views/news/PostDetail.vue'
-import Search from '../views/news/Search.vue'
+const Login = () => import(/* webpackChunkName: "user" */ '../views/user/Login')
+const Register = () =>
+  import(/* webpackChunkName: "user" */ '../views/user/Register')
+const User = () =>
+  import(/* webpackChunkName: "user" */ '../views/user/User.vue')
+const Edit = () =>
+  import(/* webpackChunkName: "user" */ '../views/user/Edit.vue')
+const MyFollow = () =>
+  import(/* webpackChunkName: "user" */ '../views/user/MyFollow.vue')
+const Mycomment = () =>
+  import(/* webpackChunkName: "user" */ '../views/user/Mycomment.vue')
+const Mystar = () =>
+  import(/* webpackChunkName: "user" */ '../views/user/Mystar.vue')
+const Index = () =>
+  import(/* webpackChunkName: "index" */ '../views/news/index.vue')
+const Manage = () =>
+  import(/* webpackChunkName: "news" */ '../views/news/Manage.vue')
+const PostDetail = () =>
+  import(/* webpackChunkName: "news" */ '../views/news/PostDetail.vue')
+const Search = () =>
+  import(/* webpackChunkName: "news" */ '../views/news/Search.vue')
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,7 +37,8 @@ const routes = [
   { path: '/search/', component: Search, nane: 'search' }
 ]
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'hash'
 })
 router.beforeEach(function(to, from, next) {
   const token = localStorage.getItem('token')

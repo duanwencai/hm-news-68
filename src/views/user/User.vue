@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="header">
-      <div class="avatar"><img :src="base + user.head_img" alt="" /></div>
+      <div class="avatar"><img :src="$base + user.head_img" alt="" /></div>
       <div class="info">
         <div class="name">
           <div>
@@ -82,12 +82,8 @@ export default {
     return {
       user: ''
     }
-  },
-  computed: {
-    base() {
-      return this.$axios.defaults.baseURL
-    }
   }
+
 }
 </script>
 
